@@ -28,3 +28,5 @@ Future<bool> register(String email, String password) async {
     return false;
   }
 }
+
+Future<void> signOut() async {}

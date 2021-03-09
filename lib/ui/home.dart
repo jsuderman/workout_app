@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -14,18 +17,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  StreamSubscription<User> loginStateSubscription;
+
   PageController _pageController;
   int _page = 0;
 
   @override
   void initState() {
-    // ignore: todo
     //TODO implement initstate
     super.initState();
     _pageController = PageController();
 
     var authBloc = Provider.of<AuthBloc>(context, listen: false);
-    authBloc.currentUser.listen((fbUser) {
+    loginStateSubscription = authBloc.currentUser.listen((fbUser) {
       if (fbUser == null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -34,6 +38,12 @@ class _HomeState extends State<Home> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    loginStateSubscription.cancel();
+    super.dispose();
   }
 
   void onPageChanged(int page) {

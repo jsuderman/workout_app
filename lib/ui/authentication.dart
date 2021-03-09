@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_app/blocs/auth_bloc.dart';
@@ -15,11 +18,12 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+  StreamSubscription<User> loginStateSubscription;
 
   @override
   void initState() {
     var authBloc = Provider.of<AuthBloc>(context, listen: false);
-    authBloc.currentUser.listen((fbUser) {
+    loginStateSubscription = authBloc.currentUser.listen((fbUser) {
       if (fbUser != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -29,6 +33,12 @@ class _AuthenticationState extends State<Authentication> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    loginStateSubscription.cancel();
+    super.dispose();
   }
 
   @override

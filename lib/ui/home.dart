@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:provider/provider.dart';
+import 'package:workout_app/blocs/auth_bloc.dart';
+import 'package:workout_app/ui/authentication.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -14,9 +19,21 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    // ignore: todo
     //TODO implement initstate
     super.initState();
     _pageController = PageController();
+
+    var authBloc = Provider.of<AuthBloc>(context, listen: false);
+    authBloc.currentUser.listen((fbUser) {
+      if (fbUser == null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Authentication(),
+          ),
+        );
+      }
+    });
   }
 
   void onPageChanged(int page) {
@@ -31,6 +48,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     var onPageChanged;
     return Scaffold(
       body: PageView(
@@ -43,6 +61,11 @@ class _HomeState extends State<Home> {
           ),
           Center(
             child: Text("Tracker"),
+          ),
+          SignInButton(
+            Buttons.Google,
+            text: "Sign out",
+            onPressed: () => authBloc.logout(),
           ),
         ],
         controller: _pageController,
@@ -68,6 +91,11 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.assignment,
                     color: (_page == 2) ? Colors.lightBlue : Colors.grey),
                 label: ("tracker"),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app,
+                    color: (_page == 3) ? Colors.lightBlue : Colors.grey),
+                label: ("sign out"),
               ),
             ],
             onTap: navigationTapped,

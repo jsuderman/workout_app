@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "422383801518-c59aomj4gv7tntdpjpp7i6f3mbg444bu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.workout_app",
+            "certificate_hash": "fb535ce9b39cc2f8469db69c4d97e2b6d73f923b"
+          }
+        },
+        {
           "client_id": "422383801518-e0suj950slk44bugvdjtpbd7dl0aarg5.apps.googleusercontent.com",
           "client_type": 3
         }

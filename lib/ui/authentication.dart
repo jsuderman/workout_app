@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:workout_app/blocs/auth_bloc.dart';
 import 'package:workout_app/net/flutterfire.dart';
 import 'package:workout_app/ui/home.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class Authentication extends StatefulWidget {
   Authentication({Key key}) : super(key: key);
@@ -12,8 +15,25 @@ class Authentication extends StatefulWidget {
 class _AuthenticationState extends State<Authentication> {
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+
+  @override
+  void initState() {
+    var authBloc = Provider.of<AuthBloc>(context, listen: false);
+    authBloc.currentUser.listen((fbUser) {
+      if (fbUser != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -91,6 +111,18 @@ class _AuthenticationState extends State<Authentication> {
                   }
                 },
                 child: Text("Login"),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.4,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+              ),
+              child: SignInButton(
+                Buttons.Google,
+                onPressed: () => authBloc.loginGoogle(),
               ),
             ),
           ],

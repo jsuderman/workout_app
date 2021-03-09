@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<bool> signIn(String email, String password) async {
@@ -27,6 +28,14 @@ Future<bool> register(String email, String password) async {
     print(e.toString());
     return false;
   }
+}
+
+Future<void> userSetup(String displayName) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = auth.currentUser.uid.toString();
+  users.add({'displayName': displayName, 'uid': uid});
+  return;
 }
 
 Future<void> signOut() async {}

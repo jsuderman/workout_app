@@ -7,6 +7,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_app/blocs/auth_bloc.dart';
+import 'package:workout_app/screens/pageviews/chat_list_screen.dart';
 import 'package:workout_app/ui/authentication.dart';
 
 class Home extends StatefulWidget {
@@ -63,8 +64,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          Center(
-            child: Text("Chat"),
+          Container(
+            child: ChatListScreen(),
           ),
           Center(
             child: Text("Workouts"),

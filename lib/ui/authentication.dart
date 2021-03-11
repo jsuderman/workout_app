@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_app/blocs/auth_bloc.dart';
+import 'package:workout_app/net/firebase_repo.dart';
 import 'package:workout_app/net/flutterfire.dart';
 import 'package:workout_app/ui/home.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -19,7 +20,7 @@ class _AuthenticationState extends State<Authentication> {
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
   StreamSubscription<User> loginStateSubscription;
-
+  FirebaseRepo _repo = FirebaseRepo();
   @override
   void initState() {
     var authBloc = Provider.of<AuthBloc>(context, listen: false);

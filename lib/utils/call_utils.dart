@@ -1,13 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:workout_app/models/call.dart';
+import 'package:workout_app/models/user.dart';
 import 'package:workout_app/resources/call_methods.dart';
 import 'package:workout_app/screens/callscreens/call_screens.dart';
 
 class CallUtils {
   static final CallMethods callMethods = CallMethods();
 
-  static dial({User from, User to, context}) async {
+  static dial({AppUser from, AppUser to, context}) async {
     Call call = Call(
       callerId: from.uid,
       callerName: from.name,

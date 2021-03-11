@@ -63,6 +63,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: customAppBar(context),
+      floatingActionButton: NewChatButton(),
     );
   }
 }
@@ -111,6 +112,29 @@ class UserCircle extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class NewChatButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF5032b6),
+            const Color(0xFFb765d3),
+          ],
+        ),
+      ),
+      child: Icon(
+        Icons.edit,
+        color: Colors.white,
+        size: 25,
+      ),
+      padding: EdgeInsets.all(15),
     );
   }
 }

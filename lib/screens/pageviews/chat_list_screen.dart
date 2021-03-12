@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workout_app/net/firebase_repo.dart';
 import 'package:workout_app/utils/utils.dart';
 import 'package:workout_app/widgets/appbar.dart';
+import 'package:workout_app/widgets/custom_tile.dart';
 
 class ChatListScreen extends StatefulWidget {
   ChatListScreen({Key key}) : super(key: key);
@@ -64,6 +65,75 @@ class _ChatListScreenState extends State<ChatListScreen> {
       backgroundColor: Colors.black,
       appBar: customAppBar(context),
       floatingActionButton: NewChatButton(),
+      body: ChatListContainer(currentUserId),
+    );
+  }
+}
+
+class ChatListContainer extends StatefulWidget {
+  final String currentUserId;
+
+  ChatListContainer(this.currentUserId);
+
+  @override
+  _ChatListContainerState createState() => _ChatListContainerState();
+}
+
+class _ChatListContainerState extends State<ChatListContainer> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(itemBuilder: (context, index) {
+        return CustomTile(
+          mini: false,
+          onTap: () {},
+          title: Text(
+            "Justin Suderman",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Arial",
+              fontSize: 19,
+            ),
+          ),
+          subtitle: Text(
+            "Last message in chat",
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 14,
+            ),
+          ),
+          leading: Container(
+            constraints: BoxConstraints(
+              maxHeight: 60,
+              maxWidth: 60,
+            ),
+            child: Stack(
+              children: <Widget>[
+                CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: NetworkImage(
+                      "https://yt3.ggpht.com/a/AGF-17_zT8BuWwHTymaQaBptCy7WrsOD72gYGp-puw=s900-c-k-c0xffffffff-no-rj-mo"),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }),
     );
   }
 }

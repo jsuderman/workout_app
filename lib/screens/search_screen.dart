@@ -4,6 +4,8 @@ import 'package:workout_app/models/user.dart';
 import 'package:workout_app/net/firebase_repo.dart';
 import 'package:workout_app/widgets/custom_tile.dart';
 
+import 'chatscreens/chat_screen.dart';
+
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -106,7 +108,16 @@ class _SearchScreenState extends State<SearchScreen> {
 
           return CustomTile(
             mini: false,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    receiver: searchedUser,
+                  ),
+                ),
+              );
+            },
             leading: CircleAvatar(
               backgroundImage: NetworkImage(searchedUser.profilePhoto),
             ),

@@ -56,4 +56,17 @@ class FirebaseMethods {
         .doc(currentUser.uid)
         .set(appUser.toMap(appUser));
   }
+
+  Future<List<AppUser>> fetchAllUsers(User currentUser) async {
+    List<AppUser> userList = [];
+
+    QuerySnapshot querySnapshot =
+        await firebasefirestore.collection('"users').get();
+    for (var i = 0; i < querySnapshot.docs.length; i++) {
+      if (querySnapshot.docs[i].id != currentUser.uid) {
+        userList.add(AppUser.fromMap(querySnapshot.docs[i].data()));
+      }
+    }
+    return userList;
+  }
 }

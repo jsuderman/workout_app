@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:workout_app/models/user.dart';
 import 'package:workout_app/net/firebase_methods.dart';
 
 class FirebaseRepo {
@@ -14,4 +15,7 @@ class FirebaseRepo {
   Future<void> addDataToDb(User user) => _firebaseMethods.addDataToDb(user);
 
   getCurrentUser() {}
+
+  Future<List<AppUser>> fetchAllUsers(User user) =>
+      _firebaseMethods.fetchAllUsers(user);
 }

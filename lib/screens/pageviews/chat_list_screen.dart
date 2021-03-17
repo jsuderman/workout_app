@@ -46,7 +46,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
             Icons.search,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/search_screen");
+          },
         ),
         IconButton(
           icon: Icon(
@@ -112,8 +114,7 @@ class _ChatListContainerState extends State<ChatListContainer> {
                 CircleAvatar(
                   maxRadius: 30,
                   backgroundColor: Colors.grey,
-                  backgroundImage: NetworkImage(
-                      "https://yt3.ggpht.com/a/AGF-17_zT8BuWwHTymaQaBptCy7WrsOD72gYGp-puw=s900-c-k-c0xffffffff-no-rj-mo"),
+                  //backgroundImage: NetworkImage(""),
                 ),
                 Align(
                   alignment: Alignment.bottomRight,

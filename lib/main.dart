@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_app/blocs/auth_bloc.dart';
 import 'package:workout_app/net/firebase_repo.dart';
+import 'package:workout_app/screens/search_screen.dart';
 import 'package:workout_app/ui/authentication.dart';
 import 'package:workout_app/ui/home.dart';
 
@@ -22,6 +23,10 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthBloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
+        initialRoute: '/',
+        routes: {
+          '/search_screen': (context) => SearchScreen(),
+        },
         home: FutureBuilder(
           future: _repo.getCurrentAppUser(),
           builder: (context, AsyncSnapshot<User> snapshot) {

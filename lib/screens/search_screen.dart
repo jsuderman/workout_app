@@ -63,7 +63,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  searchController.clear();
+                  WidgetsBinding.instance
+                      .addPostFrameCallback((_) => searchController.clear());
                 },
               ),
               border: InputBorder.none,
@@ -84,9 +85,9 @@ class _SearchScreenState extends State<SearchScreen> {
     final List<AppUser> suggestionList = query.isEmpty
         ? []
         : userList.where((AppUser user) {
-            String _getUsername = user.username.toLowerCase();
-            String _query = query.toLowerCase();
-            String _getName = user.name.toLowerCase();
+            String _getUsername = user.username?.toLowerCase();
+            String _query = query?.toLowerCase();
+            String _getName = user.name?.toLowerCase();
             bool matchesUsername = _getUsername.contains(_query);
             bool matchesName = _getName.contains(_query);
 
@@ -97,10 +98,11 @@ class _SearchScreenState extends State<SearchScreen> {
         itemCount: suggestionList.length,
         itemBuilder: (context, index) {
           AppUser searchedUser = AppUser(
-              uid: suggestionList[index].uid,
-              profilePhoto: suggestionList[index].profilePhoto,
-              name: suggestionList[index].name,
-              username: suggestionList[index].username);
+            uid: suggestionList[index].uid,
+            profilePhoto: suggestionList[index].profilePhoto,
+            name: suggestionList[index].name,
+            username: suggestionList[index].username,
+          );
 
           return CustomTile(
             mini: false,

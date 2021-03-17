@@ -61,7 +61,7 @@ class FirebaseMethods {
     List<AppUser> userList = [];
 
     QuerySnapshot querySnapshot =
-        await firebasefirestore.collection('"users').get();
+        await firebasefirestore.collection('users').get();
     for (var i = 0; i < querySnapshot.docs.length; i++) {
       if (querySnapshot.docs[i].id != currentUser.uid) {
         userList.add(AppUser.fromMap(querySnapshot.docs[i].data()));

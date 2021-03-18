@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/models/user.dart';
 import 'package:workout_app/widgets/appbar.dart';
+import 'package:workout_app/widgets/custom_tile.dart';
 
 class ChatScreen extends StatefulWidget {
   final AppUser receiver;
@@ -112,17 +113,96 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     }
 
+    addMediaModal(context) {
+      showModalBottomSheet(
+          context: context,
+          elevation: 0,
+          backgroundColor: Colors.black,
+          builder: (context) {
+            return Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 15,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.maybePop(context),
+                        child: Icon(
+                          Icons.close,
+                        ),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "content and tools",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Flexible(
+                    child: ListView(
+                  children: <Widget>[
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                    ModalTile(
+                      title: "Media",
+                      subtitle: "Share Photo and Videos",
+                      icon: Icons.image,
+                    ),
+                  ],
+                ))
+              ],
+            );
+          });
+    }
+
     return Container(
       padding: EdgeInsets.all(10),
       child: Row(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              shape: BoxShape.circle,
+          GestureDetector(
+            onTap: () => addMediaModal(context),
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.add),
             ),
-            child: Icon(Icons.add),
           ),
           SizedBox(
             width: 5,
@@ -218,6 +298,56 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () {},
         ),
       ],
+    );
+  }
+}
+
+class ModalTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+
+  const ModalTile({
+    @required this.title,
+    @required this.subtitle,
+    @required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: CustomTile(
+        mini: false,
+        leading: Container(
+          margin: EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.green,
+          ),
+          padding: EdgeInsets.all(10),
+          child: Icon(
+            icon,
+            color: Colors.grey,
+            size: 38,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 14,
+          ),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 18,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -23,8 +23,84 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: customAppBar(context),
       body: Column(
         children: <Widget>[
+          Flexible(child: messageList()),
           chatControls(),
         ],
+      ),
+    );
+  }
+
+  Widget messageList() {
+    return ListView.builder(
+      padding: EdgeInsets.all(10),
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        return chatMessageItem();
+      },
+    );
+  }
+
+  Widget chatMessageItem() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 15),
+      child: Container(
+        child: senderLayout(),
+      ),
+    );
+  }
+
+  Widget senderLayout() {
+    Radius messageRadius = Radius.circular(10);
+
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.only(
+          topLeft: messageRadius,
+          topRight: messageRadius,
+          bottomLeft: messageRadius,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          "hello",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget receiverLayout() {
+    Radius messageRadius = Radius.circular(10);
+
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      constraints:
+          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.only(
+          bottomRight: messageRadius,
+          topRight: messageRadius,
+          bottomLeft: messageRadius,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          "hello",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }

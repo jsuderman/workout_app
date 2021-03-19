@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:workout_app/constants/strings.dart';
+import 'package:workout_app/models/message.dart';
 import 'package:workout_app/models/user.dart';
 import 'package:workout_app/utils/utils.dart';
 
@@ -32,8 +34,8 @@ class FirebaseMethods {
 
   Future<bool> authenticateUser(User user) async {
     QuerySnapshot result = await FirebaseFirestore.instance
-        .collection('users')
-        .where("email", isEqualTo: user.email)
+        .collection(USERS_COLLECTION)
+        .where(EMAIL_FIELD, isEqualTo: user.email)
         .get();
 
     final List<DocumentSnapshot> docs = result.docs;
@@ -52,7 +54,7 @@ class FirebaseMethods {
         username: username);
 
     FirebaseFirestore.instance
-        .collection("users")
+        .collection(USERS_COLLECTION)
         .doc(currentUser.uid)
         .set(appUser.toMap(appUser));
   }
@@ -61,12 +63,29 @@ class FirebaseMethods {
     List<AppUser> userList = [];
 
     QuerySnapshot querySnapshot =
-        await firebasefirestore.collection('users').get();
+        await firebasefirestore.collection(USERS_COLLECTION).get();
     for (var i = 0; i < querySnapshot.docs.length; i++) {
       if (querySnapshot.docs[i].id != currentUser.uid) {
         userList.add(AppUser.fromMap(querySnapshot.docs[i].data()));
       }
     }
     return userList;
+  }
+
+  Future<void> addMessageToDb(
+      Message message, AppUser sender, AppUser reciever) async {
+    var map = message.toMap();
+
+    await firebasefirestore
+        .collection(MESSAGES_COLLECTION)
+        .doc(message.senderId)
+        .collection(message.receiverId)
+        .add(map);
+
+    return await firebasefirestore
+        .collection(MESSAGES_COLLECTION)
+        .doc(message.receiverId)
+        .collection(message.senderId)
+        .add(map);
   }
 }

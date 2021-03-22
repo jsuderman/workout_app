@@ -3,7 +3,6 @@ import 'package:workout_app/models/call.dart';
 import 'package:workout_app/resources/call_methods.dart';
 
 class CallScreen extends StatefulWidget {
-  CallScreen({Key key, Call call}) : super(key: key);
   final Call call;
 
   CallScreen({
@@ -15,26 +14,32 @@ class CallScreen extends StatefulWidget {
 }
 
 class _CallScreenState extends State<CallScreen> {
+  final CallMethods callMethods = CallMethods();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text(
-            "call has been made",
-          ),
-          MaterialButton(
-            color: Colors.red,
-            child: Icon(
-              Icons.call_end,
-              color: Colors.white,
+      body: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "call has been made",
             ),
-            onPressed: () {
-              CallMethods.endCall(call: widget.call);
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            MaterialButton(
+              color: Colors.red,
+              child: Icon(
+                Icons.call_end,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                callMethods.endCall(call: widget.call);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -20,6 +20,7 @@ class _AuthenticationState extends State<Authentication> {
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
   StreamSubscription<User> loginStateSubscription;
+  // ignore: unused_field
   FirebaseRepo _repo = FirebaseRepo();
   @override
   void initState() {

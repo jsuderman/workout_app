@@ -11,12 +11,27 @@ class FirebaseMethods {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
 
+  static final CollectionReference _userCollection =
+      _firebasefirestore.collection(USERS_COLLECTION);
+
+  static final FirebaseFirestore _firebasefirestore =
+      FirebaseFirestore.instance;
+
   AppUser appUser = AppUser();
 
   Future<User> getCurrentAppUser() async {
     User currentAppUser;
     currentAppUser = _auth.currentUser;
     return currentAppUser;
+  }
+
+  Future<AppUser> getAppUserDetails() async {
+    User currentUser = await getCurrentAppUser();
+
+    DocumentSnapshot documentSnapshot =
+        await _userCollection.doc(currentUser.uid).get();
+
+    return AppUser.fromMap(documentSnapshot.data());
   }
 
   Future<User> logIn() async {

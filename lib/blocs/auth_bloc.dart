@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:workout_app/net/auth_services.dart';
 
-class AuthBloc {
+class AuthBloc with ChangeNotifier {
   final authService = AuthServices();
   final googleSignIn = GoogleSignIn(scopes: ['email']);
 

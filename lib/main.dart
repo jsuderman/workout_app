@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workout_app/blocs/auth_bloc.dart';
 import 'package:workout_app/net/firebase_repo.dart';
+import 'package:workout_app/provider/user_provider.dart';
 import 'package:workout_app/screens/search_screen.dart';
 import 'package:workout_app/ui/authentication.dart';
 import 'package:workout_app/ui/home.dart';
@@ -14,13 +15,17 @@ void main() async {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   FirebaseRepo _repo = FirebaseRepo();
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => AuthBloc(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthBloc()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         initialRoute: '/',

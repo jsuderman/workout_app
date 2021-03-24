@@ -10,6 +10,8 @@ class FirebaseRepo {
 
   Future<User> logIn() => _firebaseMethods.logIn();
 
+  Future<AppUser> getUserDetails() => _firebaseMethods.getAppUserDetails();
+
   Future<bool> authenticateUser(User user) =>
       _firebaseMethods.authenticateUser(user);
 
@@ -23,4 +25,6 @@ class FirebaseRepo {
   Future<void> addMessageToDb(
           Message message, AppUser sender, AppUser receiver) =>
       _firebaseMethods.addMessageToDb(message, sender, receiver);
+
+  getAppUserDetails() {}
 }

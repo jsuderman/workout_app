@@ -32,12 +32,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    SchedulerBinding.instance.addPersistentFrameCallback((_) {
-      userProvider = Provider.of<UserProvider>(context, listen: false);
-
-      userProvider.refreshAppUser();
-    });
-
     _pageController = PageController();
 
     var authBloc = Provider.of<AuthBloc>(context, listen: false);
@@ -49,6 +43,12 @@ class _HomeState extends State<Home> {
           ),
         );
       }
+    });
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      userProvider.refreshAppUser();
     });
   }
 

@@ -75,7 +75,7 @@ class FirebaseMethods {
   }
 
   Future<List<AppUser>> fetchAllUsers(User currentUser) async {
-    List<AppUser> userList = [];
+    List<AppUser> userList = List<AppUser>.empty(growable: true);
 
     QuerySnapshot querySnapshot =
         await firebasefirestore.collection(USERS_COLLECTION).get();

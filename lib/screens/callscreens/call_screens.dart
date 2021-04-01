@@ -117,6 +117,7 @@ class _CallScreenState extends State<CallScreen> {
         _users.add(uid);
       });
     }, userOffline: (uid, elapsed) {
+      callMethods.endCall(call: widget.call);
       setState(() {
         final info = 'userOffline: $uid';
         _infoStrings.add(info);

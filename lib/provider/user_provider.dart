@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/models/user.dart';
 import 'package:workout_app/net/firebase_repo.dart';
+import 'package:flutter/widgets.dart';
 
 class UserProvider with ChangeNotifier {
   AppUser _appUser;

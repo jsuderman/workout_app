@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/models/call.dart';
 import 'package:workout_app/resources/call_methods.dart';
+import 'package:workout_app/utils/permissions.dart';
 
 import '../call_screens.dart';
 
@@ -64,12 +65,15 @@ class PickupScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.call),
                   color: Colors.green,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CallScreen(call: call),
-                    ),
-                  ),
+                  onPressed: () async =>
+                      await Permissions.cameraAndMicrophonePermissionsGranted()
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CallScreen(call: call),
+                              ),
+                            )
+                          : {},
                 ),
               ],
             )

@@ -22,7 +22,7 @@ class PickupLayout extends StatelessWidget {
         ? StreamBuilder<DocumentSnapshot>(
             stream: callMethods.callStream(uid: userProvider.getAppUser.uid),
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
+              if (snapshot.hasData && snapshot.data.data() != null) {
                 Call call = Call.fromMap(snapshot.data.data());
 
                 if (!call.hasDialled) {
@@ -36,7 +36,9 @@ class PickupLayout extends StatelessWidget {
           )
         : Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.blue,
+              ),
             ),
           );
   }

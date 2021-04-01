@@ -5,6 +5,7 @@ import 'package:workout_app/models/message.dart';
 import 'package:workout_app/models/user.dart';
 import 'package:workout_app/net/firebase_repo.dart';
 import 'package:workout_app/utils/call_utils.dart';
+import 'package:workout_app/utils/permissions.dart';
 import 'package:workout_app/widgets/appbar.dart';
 import 'package:workout_app/widgets/custom_tile.dart';
 
@@ -354,11 +355,14 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(
             Icons.video_call,
           ),
-          onPressed: () => CallUtils.dial(
-            from: sender,
-            to: widget.receiver,
-            context: context,
-          ),
+          onPressed: () async =>
+              await Permissions.cameraAndMicrophonePermissionsGranted()
+                  ? CallUtils.dial(
+                      from: sender,
+                      to: widget.receiver,
+                      context: context,
+                    )
+                  : {},
         ),
         IconButton(
           icon: Icon(

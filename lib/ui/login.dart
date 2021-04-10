@@ -13,10 +13,23 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   FirebaseRepo _repo = FirebaseRepo();
 
+  bool isLoginPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: loginButton(),
+      body: Stack(
+        children: [
+          Center(
+            child: loginButton(),
+          ),
+          isLoginPressed
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 
@@ -30,17 +43,26 @@ class _LoginState extends State<Login> {
   }
 
   void performLogin() {
+    print("trying to login");
+
+    setState(() {
+      isLoginPressed = true;
+    });
+
     _repo.logIn().then((User user) {
       if (user != null) {
         authenticateUser(user);
       } else {
-        print("there was an error");
+        print("There was an error");
       }
     });
   }
 
   void authenticateUser(User user) {
     _repo.authenticateUser(user).then((isNewUser) {
+      setState(() {
+        isLoginPressed = false;
+      });
       if (isNewUser) {
         _repo.addDataToDb(user).then((value) {
           Navigator.pushReplacement(context,

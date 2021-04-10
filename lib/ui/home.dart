@@ -1,61 +1,33 @@
-import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
+
 import 'package:provider/provider.dart';
-import 'package:workout_app/blocs/auth_bloc.dart';
 import 'package:workout_app/provider/user_provider.dart';
 import 'package:workout_app/screens/callscreens/pickup/pickup_layout.dart';
 import 'package:workout_app/screens/pageviews/chat_list_screen.dart';
-import 'package:workout_app/ui/authentication.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  StreamSubscription<User> loginStateSubscription;
-
-  UserProvider userProvider;
-
   PageController _pageController;
   int _page = 0;
+
+  UserProvider userProvider;
 
   @override
   void initState() {
     super.initState();
 
-    _pageController = PageController();
-
-    var authBloc = Provider.of<AuthBloc>(context, listen: false);
-    loginStateSubscription = authBloc.currentUser.listen((fbUser) {
-      if (fbUser == null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => Authentication(),
-          ),
-        );
-      }
-    });
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       userProvider = Provider.of<UserProvider>(context, listen: false);
-
       userProvider.refreshAppUser();
     });
-  }
 
-  @override
-  void dispose() {
-    loginStateSubscription.cancel();
-    super.dispose();
+    _pageController = PageController();
   }
 
   void onPageChanged(int page) {
@@ -70,8 +42,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = Provider.of<AuthBloc>(context);
-    var onPageChanged;
     return PickupLayout(
       scaffold: Scaffold(
         body: PageView(
@@ -84,11 +54,6 @@ class _HomeState extends State<Home> {
             ),
             Center(
               child: Text("Tracker"),
-            ),
-            SignInButton(
-              Buttons.Google,
-              text: "Sign out",
-              onPressed: () => authBloc.logout(),
             ),
           ],
           controller: _pageController,

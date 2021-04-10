@@ -74,6 +74,11 @@ class FirebaseMethods {
         .set(appUser.toMap(appUser));
   }
 
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+    return await _auth.signOut();
+  }
+
   Future<List<AppUser>> fetchAllUsers(User currentUser) async {
     List<AppUser> userList = List<AppUser>.empty(growable: true);
 

@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workout_app/blocs/auth_bloc.dart';
 import 'package:workout_app/net/firebase_repo.dart';
 import 'package:workout_app/provider/user_provider.dart';
 import 'package:workout_app/screens/search_screen.dart';
-import 'package:workout_app/ui/authentication.dart';
 import 'package:workout_app/ui/home.dart';
+import 'package:workout_app/provider/image_provider.dart';
+import 'package:workout_app/ui/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => AuthBloc()),
+        ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasData) {
               return Home();
             } else {
-              return Authentication();
+              return Login();
             }
           },
         ),
